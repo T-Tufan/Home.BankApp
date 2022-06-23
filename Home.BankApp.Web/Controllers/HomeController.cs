@@ -1,6 +1,8 @@
 ﻿using Home.BankApp.Web.Data.Context;
+using Home.BankApp.Web.Data.Entities;
 using Home.BankApp.Web.Data.Interfaces;
 using Home.BankApp.Web.Data.Repositories;
+using Home.BankApp.Web.Data.UnitOfWork;
 using Home.BankApp.Web.Mapping;
 using Home.BankApp.Web.Models;
 using Microsoft.AspNetCore.Mvc;
@@ -13,19 +15,29 @@ namespace Home.BankApp.Web.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly BankContext _context;
-        private readonly IUserRepository _userRepository;
+        //private readonly BankContext _context;
+        //private readonly IUserRepository _userRepository;
         private readonly IUserMapping _userMapping;
-        public HomeController(BankContext bankContext , IUserRepository userRepository, IUserMapping userMapping)
+
+        private readonly IUnitOfWork _unitOfWork;
+
+        public HomeController(IUnitOfWork unitOfWork , IUserMapping userMapping)
         {
-            _context = bankContext;
-            _userRepository = userRepository;
+            _unitOfWork = unitOfWork;
             _userMapping = userMapping;
         }
+        //public HomeController(BankContext bankContext , IUserRepository userRepository, IUserMapping userMapping)
+        //{
+        //    _context = bankContext;
+        //    _userRepository = userRepository;
+        //    _userMapping = userMapping;
+        //}
         public IActionResult Index()
         {
             //var userlist = _context.ApplicationUsers.Select(x => new UserListModel { Id = x.Id , Name = x.Name , Surname = x.Surname }).ToList();
-            return View(_userMapping.MapToListOfUserList(_userRepository.GetAll()));
+
+            return View(_userMapping.MapToListOfUserList(_unitOfWork.GetRepository<ApplicationUser>().GetAll()));
+            //return View(_userMapping.MapToListOfUserList(_userRepository.GetAll()));
         }
     }
 }

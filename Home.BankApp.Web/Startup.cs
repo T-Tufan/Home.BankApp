@@ -1,6 +1,7 @@
 using Home.BankApp.Web.Data.Context;
 using Home.BankApp.Web.Data.Interfaces;
 using Home.BankApp.Web.Data.Repositories;
+using Home.BankApp.Web.Data.UnitOfWork;
 using Home.BankApp.Web.Mapping;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -32,6 +33,8 @@ namespace Home.BankApp.Web
             services.AddScoped<IAccountRepository, AccountRepository>();
             services.AddScoped<IAccountMapper, AccountMapper>();
 
+
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
             //Generic Repository 
             services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
             services.AddControllersWithViews();

@@ -29,13 +29,13 @@ namespace Home.BankApp.Web.Data.Repositories
         {
             //_context.ApplicationUsers.Add(user);
             _context.Set<T>().Add(entity);
-            _context.SaveChanges();
+            //_context.SaveChanges();
         }
 
         public void Remove(T entity)
         {
             _context.Set<T>().Remove(entity);
-            _context.SaveChanges();
+            //_context.SaveChanges();
         }
 
         public void Update(T entity)
